@@ -4,13 +4,16 @@ public class CheckingAccount extends Account{
 
     //defualt constructor
     public CheckingAccount() {
+
         super();
     }
 
-    public CheckingAccount(int accountNumber,double fee){
-        super(accountNumber);
+    public CheckingAccount(int accountNumber,double deposit,double fee){
+        super(accountNumber,deposit);
         FEE = fee;
     }
+
+
     public void deposit(double amount){
         if(amount > 0){
             balance += amount;
