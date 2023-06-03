@@ -84,6 +84,9 @@ public abstract class Account {
 
             try{
                 i = Double.parseDouble(number);
+                if(i < 0){
+                    System.out.println("Negative numbers are not allowed");
+                }
             } catch (NumberFormatException e){
                 System.out.println("Please enter a valid quantity");
                 i = -1;

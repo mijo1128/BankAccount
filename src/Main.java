@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Main {
     static HashMap<Integer, Account> accounts = new HashMap<>();
-    static HashMap<Integer,Transactions> transactions = new HashMap<>();
     public static void main(String[] args) {
         Scanner selection = new Scanner(System.in);
         System.out.println("""
