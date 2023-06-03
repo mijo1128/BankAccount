@@ -1,16 +1,13 @@
 public class CheckingAccount extends Account{
     //default transcation fee
-    private static double FEE = 2.5;
 
     //defualt constructor
     public CheckingAccount() {
-
         super();
     }
 
-    public CheckingAccount(int accountNumber,double deposit,double fee){
-        super(accountNumber,deposit);
-        FEE = fee;
+    public CheckingAccount(double deposit,boolean overdrafted){
+        super(deposit,overdrafted);
     }
 
 
@@ -18,8 +15,6 @@ public class CheckingAccount extends Account{
         if(amount > 0){
             balance += amount;
             System.out.printf("Amount %.2f deposited%n",amount);
-            balance -= FEE;
-            System.out.printf("Fee %.2f Applied%n",FEE);
             System.out.printf("Current Balance is: %.2f%n",balance);
         }else{
             System.out.println("A negative amount cannot be deposited");
@@ -28,11 +23,9 @@ public class CheckingAccount extends Account{
 
     public void withdraw(double amount){
         if(amount > 0){
-            if((amount+FEE) <= balance){
+            if((amount) <= balance){
                 System.out.printf("Amount %.2f withdrawn from Account%n",amount);
                 balance -= amount;
-                balance -= FEE;
-                System.out.printf("Fee of %.2f applied%n",FEE);
                 System.out.printf("Current Balance is: %.2f%n",balance);
             }
         }else{

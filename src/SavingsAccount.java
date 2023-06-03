@@ -5,8 +5,8 @@ public class SavingsAccount extends Account {
         super();
     }
 
-    public SavingsAccount(int accountNumber, double deposit, double interestRate){
-        super(accountNumber,deposit);
+    public SavingsAccount(double deposit, double interestRate){
+        super(deposit);
         this.interestRate = interestRate;
     }
 
