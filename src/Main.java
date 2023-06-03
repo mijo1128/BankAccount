@@ -2,28 +2,35 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
-    HashMap<Integer, Account> accounts = new HashMap<>();
+    static HashMap<Integer, Account> accounts = new HashMap<>();
+    static HashMap<Integer,Transactions> transactions = new HashMap<>();
     public static void main(String[] args) {
         Scanner selection = new Scanner(System.in);
-        System.out.println("Welcome to your bank account. + " +
-                "Lets get you started by setting up your Checking Account.");
-        double amount = validNumber("How much would you like to deposit as your initial balance?");
-        CheckingAccount checkingAcc = new CheckingAccount(amount);
+        System.out.println("""
+                Welcome to your bank account.
+                Lets get you started by setting up your Account.
+                """);
+        System.out.println("Enter your first name: ");
+        String name = selection.nextLine();
+        System.out.println("Enter your last name: ");
+        String lastName = selection.nextLine();
+        double amount = Account.validNumber("How much would you like to deposit as your initial balance?");
+        CheckingAccount checkingAcc = new CheckingAccount(name,lastName,amount);
+        checkingAcc.log(amount,"Bank","Deposit");
+        addToMap(checkingAcc.getAccountNumber(), checkingAcc);
 
 
         String input;
         do {
-            System.out.println("Current balance: " + checkingAcc.getBalance());
-            System.out.println("Account No: " + checkingAcc.getAccountNumber());
-            if(checkingAcc.getOverdrafted()){
-                System.out.println("Overdrafted");
-            }
             System.out.println();
-            System.out.println("Would you like to [D]eposit, [W]ithdraw, or [C]hange type? or [Q]uit");
+            System.out.println("Would you like to [D]eposit, [W]ithdraw, [L]og in a purchase, [V]iew account, [T]ransactions or [Q]uit?");
             input = selection.next().toUpperCase();
             switch (input) {
-                case "D" -> checkingAcc.deposit(validNumber("How much would you like to deposit?"));
-                case "W" -> checkingAcc.withdraw(validNumber("How much would you like to withdraw?"));
+                case "D" -> checkingAcc.deposit(Account.validNumber("How much would you like to deposit?"));
+                case "W" -> checkingAcc.withdraw(Account.validNumber("How much would you like to withdraw?"));
+                case "L" -> checkingAcc.logPurchase();
+                case "V" -> checkingAcc.viewAccount();
+                case "T" -> checkingAcc.getTransactions();
                 case "Q" -> System.out.println("Thank you for visiting.");
                 default -> System.out.println("Please select one of the given choices");
             }
@@ -31,21 +38,11 @@ public class Main {
 
 
     }
-    public static double validNumber(String prompt){
-        Scanner scanner = new Scanner(System.in);
-        double i = -1;
-        while(i < 0){
-            System.out.println(prompt);
-            String number = scanner.next();
 
-            try{
-                i = Double.parseDouble(number);
-            } catch (NumberFormatException e){
-                System.out.println("Please enter a valid quantity");
-                i = -1;
-            }
-        }
-        return i;
+    public static void addToMap(int accountNo,Account account){
+
+        accounts.put(accountNo,account);
     }
+
 
 }
