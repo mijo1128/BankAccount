@@ -1,42 +1,45 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
+    HashMap<Integer, Account> accounts = new HashMap<>();
     public static void main(String[] args) {
         Scanner selection = new Scanner(System.in);
         System.out.println("Welcome to your bank account. + " +
                 "Lets get you started by setting up your Checking Account.");
-        double amount = validNumber(selection,"How much would you like to deposit?");
-        CheckingAccount checkingAcc = new CheckingAccount(amount,false);
-        System.out.println("Balance: " + checkingAcc.getBalance());
-        System.out.println("Account Number: " + checkingAcc.getAccountNumber());
-        checkingAcc.deposit(100);
-        checkingAcc.withdraw(50);
+        double amount = validNumber("How much would you like to deposit as your initial balance?");
+        CheckingAccount checkingAcc = new CheckingAccount(amount);
 
 
-//        do {
-//            account.printBalance();
-//            System.out.println("Account type: "+ account.type);
-//            System.out.println("Would you like to [D]eposit, [W]ithdraw, or [C]hange type? or [Q]uit");
-//            input = selection.next().toUpperCase();
-//            switch (input) {
-//                case "D" -> account.deposit();
-//                case "W" -> account.withdraw();
-//                case "C" -> account.changeType();
-//                case "Q" -> System.out.println("Thank you for visiting.");
-//                default -> System.out.println("Please select one of the given choices");
-//            }
-//        } while(!input.equals("Q"));
+        String input;
+        do {
+            System.out.println("Current balance: " + checkingAcc.getBalance());
+            System.out.println("Account No: " + checkingAcc.getAccountNumber());
+            if(checkingAcc.getOverdrafted()){
+                System.out.println("Overdrafted");
+            }
+            System.out.println();
+            System.out.println("Would you like to [D]eposit, [W]ithdraw, or [C]hange type? or [Q]uit");
+            input = selection.next().toUpperCase();
+            switch (input) {
+                case "D" -> checkingAcc.deposit(validNumber("How much would you like to deposit?"));
+                case "W" -> checkingAcc.withdraw(validNumber("How much would you like to withdraw?"));
+                case "Q" -> System.out.println("Thank you for visiting.");
+                default -> System.out.println("Please select one of the given choices");
+            }
+        } while(!input.equals("Q"));
 
 
     }
-    public static double validNumber(Scanner stdin, String prompt){
+    public static double validNumber(String prompt){
+        Scanner scanner = new Scanner(System.in);
         double i = -1;
         while(i < 0){
             System.out.println(prompt);
-            String input = stdin.nextLine();
+            String number = scanner.next();
 
             try{
-                i = Double.parseDouble(input);
+                i = Double.parseDouble(number);
             } catch (NumberFormatException e){
                 System.out.println("Please enter a valid quantity");
                 i = -1;

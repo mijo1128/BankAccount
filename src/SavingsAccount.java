@@ -1,15 +1,10 @@
 public class SavingsAccount extends Account {
 
     private double interestRate = 1.2;
-    public SavingsAccount() {
-        super();
-    }
+    public SavingsAccount(double balance) {
+        super(balance);
 
-    public SavingsAccount(double deposit, double interestRate){
-        super(deposit);
-        this.interestRate = interestRate;
     }
-
     //getter function
     public double getInterestRate() {
         return this.interestRate;

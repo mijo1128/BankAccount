@@ -1,4 +1,6 @@
 
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,16 +10,15 @@ public abstract class Account {
 
     protected boolean overdrafted = false;
 
-    public Account() {
-    }
-    public Account(double deposit,boolean overdrafted) {
+    public Account(double deposit) {
         this.balance = deposit;
     }
 
 
 
-    public double getBalance() {
-        return this.balance;
+    public String getBalance() {
+        String usCurrency = NumberFormat.getCurrencyInstance(Locale.US).format(this.balance);
+        return usCurrency;
     }
 
     public int getAccountNumber() {
@@ -42,7 +43,7 @@ public abstract class Account {
 
     public static int generateAccountNumber(){
         Random random = new Random();
-        StringBuilder string = new StringBuilder(2);
+        StringBuilder string = new StringBuilder(6);
         for (int i = 0; i < string.capacity(); i++) {
             int randInt = random.nextInt(1,8);
             string.append(randInt);
